@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JExec Check — test whether an intended execution is admissible</title>
+<meta name="description" content="Run an intended execution through the JExec Protocol. Deterministic, rule-based, in your browser: detect admissibility failure classes and produce a JExec Record before anything mutates state.">
+<link rel="canonical" href="https://jexec.com/check.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JExec Check","url":"https://jexec.com/check.html","applicationCategory":"DeveloperApplication","operatingSystem":"Any","description":"A deterministic engine that runs the JExec Protocol against a declared intended execution and emits a JExec Record.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html" aria-current="page">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="kicker">Engine · Check v0.1</p>
+<h1>JExec Check</h1>
+<p class="lede">Declare an intended execution. The engine runs the <a href="/protocol.html">published protocol rules</a> — deterministically, in your browser, sending nothing anywhere — and returns a verdict, the failure classes behind it, and a <a href="/record.html">JExec Record</a>.</p>
+
+<p class="muted small">This is a rules engine, not an oracle: it evaluates what you declare. Its honesty about that limitation is the point — the same is true of every admissibility boundary. The rules are identical to the table on the <a href="/protocol.html">Protocol page</a>; if they ever diverge, that is a governance incident.</p>
+
+<noscript><p class="thesis-line">JExec Check needs JavaScript to run its rules in your browser. Without it, you can apply the same rules by hand: walk the verdict table on the <a href="/protocol.html">Protocol page</a> — the engine does nothing more.</p></noscript>
+
+<form id="jexec-form" class="check-form">
+
+<fieldset class="q"><legend>1 · Intent</legend>
+<p><label for="intent-text" class="q-title" style="padding:0">Optional: state the intent (goes into the record)</label><br>
+<input id="intent-text" type="text" maxlength="200" placeholder="e.g. delete unused staging buckets tagged temp-*" style="width:100%;max-width:34rem;background:var(--ink);border:1px solid var(--line);color:var(--text);font-family:var(--mono);font-size:0.85rem;padding:0.5rem 0.7rem;border-radius:4px;margin-top:0.4rem"></p>
+<label><input type="radio" name="intent" value="specific"><span>Declared and specific — operation, object, and target are stated.</span></label>
+<label><input type="radio" name="intent" value="vague"><span>Declared but vague — “maintenance”, “sync”, “cleanup”.</span></label>
+<label><input type="radio" name="intent" value="none"><span>Not declared — the execution does not state what it changes.</span></label>
+</fieldset>
+
+<fieldset class="q"><legend>2 · Actor</legend>
+<p class="hint">Who or what requests this execution?</p>
+<label><input type="radio" name="actortype" value="ai_agent"><span>AI agent</span></label>
+<label><input type="radio" name="actortype" value="ci_job"><span>CI job / pipeline</span></label>
+<label><input type="radio" name="actortype" value="script"><span>Script / scheduled job</span></label>
+<label><input type="radio" name="actortype" value="human"><span>Human operator</span></label>
+<p class="hint" style="margin-top:0.8rem">Is its identity established?</p>
+<label><input type="radio" name="actor" value="authenticated"><span>Attributed and authenticated — its own identity, verified at the boundary.</span></label>
+<label><input type="radio" name="actor" value="asserted"><span>Asserted only — an identity is named but not authenticated.</span></label>
+<label><input type="radio" name="actor" value="unknown"><span>Unknown / shared — shared credentials, ambient account, unattributable.</span></label>
+</fieldset>
+
+<fieldset class="q"><legend>3 · Authority</legend>
+<label><input type="radio" name="authority" value="verified"><span>Verified — a named source (policy, approval, change request) checked by an identifiable verifier.</span></label>
+<label><input type="radio" name="authority" value="claimed"><span>Claimed — a source is named but nothing verifies it.</span></label>
+<label><input type="radio" name="authority" value="none"><span>None — authority is inferred from the credentials working.</span></label>
+<p class="hint" style="margin-top:0.8rem">If any authority exists: does its coverage contain this execution’s scope?</p>
+<label><input type="radio" name="coverage" value="covers"><span>Yes — the authority explicitly covers this environment and system.</span></label>
+<label><input type="radio" name="coverage" value="unknown"><span>Unknown or partial — nobody has compared them.</span></label>
+<label><input type="radio" name="coverage" value="no"><span>No — the authority covers a different scope.</span></label>
+</fieldset>
+
+<fieldset class="q"><legend>4 · Scope</legend>
+<label><input type="radio" name="bounded" value="bounded"><span>Bounded — environment, system, and object set (or expected count) are declared.</span></label>
+<label><input type="radio" name="bounded" value="partial"><span>Partially bounded — environment known, object set open-ended.</span></label>
+<label><input type="radio" name="bounded" value="unbounded"><span>Unbounded — it will touch whatever matches at runtime.</span></label>
+<p class="hint" style="margin-top:0.8rem">Target environment:</p>
+<label><input type="radio" name="env" value="production"><span>Production — customer-facing or business-critical state.</span></label>
+<label><input type="radio" name="env" value="nonproduction"><span>Non-production.</span></label>
+</fieldset>
+
+<fieldset class="q"><legend>5 · Evidence</legend>
+<label><input type="radio" name="evidence" value="current"><span>Present and current — bound to this artifact, this diff, this environment version.</span></label>
+<label><input type="radio" name="evidence" value="stale"><span>Present but stale — valid once, for a state that has since changed.</span></label>
+<label><input type="radio" name="evidence" value="missing"><span>Missing — nothing supports this execution.</span></label>
+</fieldset>
+
+<fieldset class="q"><legend>6 · Risk</legend>
+<label><input type="radio" name="risk" value="reversible"><span>Classified, reversible — the mutation can be undone by a known path.</span></label>
+<label><input type="radio" name="risk" value="irreversible"><span>Classified, irreversible — deletion, external side effect, financial action, destroyed information.</span></label>
+<label><input type="radio" name="risk" value="unclassified"><span>Unclassified — nobody has said what this can change or damage.</span></label>
+<p class="hint" style="margin-top:0.8rem">If irreversible: is a reversal or explicit review path declared?</p>
+<label><input type="radio" name="reversal" value="exists"><span>Yes — a reversal path or a distinct review is declared.</span></label>
+<label><input type="radio" name="reversal" value="none"><span>No — or nobody knows. (Choose this too if risk is reversible or unclassified.)</span></label>
+</fieldset>
+
+<fieldset class="q"><legend>7 · Decision record</legend>
+<label><input type="radio" name="record" value="stored"><span>A durable admissibility record will be produced and stored, whatever the verdict.</span></label>
+<label><input type="radio" name="record" value="none"><span>No record — the decision will evaporate.</span></label>
+</fieldset>
+
+<p><button class="run" type="submit">Run the boundary</button></p>
+</form>
+
+<div id="result" aria-live="polite"></div>
+
+<h2>What to do with the verdict</h2>
+<p>A <span class="verdict v-deny">DENY</span> or <span class="verdict v-escalate">ESCALATE</span> names its failure classes; each links to its reference page with remediation. Fix the declaration — or the reality behind it — and run the boundary again. To grade the whole execution path rather than one execution, use the <a href="/standard.html">JExec Admissibility Standard</a> — or request a human-performed <a href="/review.html">Execution Admissibility Review</a>.</p>
+<p class="muted small">JExec Check runs entirely client-side. It transmits nothing, stores nothing, and has no way to know whether your declarations are true — which is why the record it emits says “as declared.”</p>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+<script src="/assets/check.js"></script>
+</body>
+</html>

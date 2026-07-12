@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JExec Admissibility Standard (JAS) — levels A0–A3</title>
+<meta name="description" content="The JExec Admissibility Standard grades how governed a system’s executions are, from A0 Ungoverned to A3 Enforced. A level is a property of an execution path, not a badge.">
+<link rel="canonical" href="https://jexec.com/standard.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"JExec Admissibility Standard (JAS)","url":"https://jexec.com/standard.html","description":"Four levels, A0–A3, grading how governed a system’s executions are before they mutate state.","isPartOf":{"@type":"WebSite","name":"JExec","url":"https://jexec.com/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/">Ontology</a>
+<a href="/standard.html" aria-current="page">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="kicker">Reference · JAS v0.1 (draft)</p>
+<h1>JExec Admissibility Standard</h1>
+<p class="lede">The <a href="/ontology/">ontology</a> says what can go wrong. The Standard says what <em>good</em> is: four levels grading how governed a system’s executions are before they mutate state.</p>
+
+<p>A JAS level is a property of an <strong>execution path</strong> — one route by which state gets mutated (a deploy pipeline, an agent’s tool loop, a migration runbook) — not of a company, a product, or a team. A system can honestly say “our production deploys are A2; our agent tool calls are A0.” That sentence is the Standard working as intended.</p>
+
+<h2>The four levels</h2>
+
+<h3><span class="badge b-deny">A0</span> Ungoverned</h3>
+<p>No admissibility decision exists before execution. Mutations happen because credentials permit them. Whatever governance exists is post-hoc: logs, alerts, incident review. Most automation in the world today — and nearly all agent tool execution — operates at A0.</p>
+<p class="muted small">Characteristic failure: any class in the ontology, discovered after the fact.</p>
+
+<h3><span class="badge b-warn">A1</span> Declared</h3>
+<p>Before execution, the seven fields of the <a href="/record.html">JExec Record</a> are declared: intent, actor, authority, scope, evidence, risk, and intended decision. Nothing is yet verified — but the execution has stated what it is, on the record, in advance. Declaration alone eliminates the silent forms of <a href="/ontology/unstated-intent.html">EAF-1</a>, <a href="/ontology/unbounded-scope.html">EAF-5</a>, and <a href="/ontology/unclassified-risk.html">EAF-8</a>: an execution can no longer <em>not have</em> an intent, a scope, or a risk class.</p>
+<p><strong>Requirements.</strong> Every execution on the path declares all seven fields before running; declarations are stored with the execution; mechanism-grade intents (“run script”) are rejected.</p>
+
+<h3><span class="badge b-escalate">A2</span> Verified</h3>
+<p>Declarations are checked, not merely present. Actor identity is authenticated (<a href="/ontology/unattributed-actor.html">EAF-2</a>). Authority names a source, a verifier, and evidence, and its coverage is compared against the declared scope (<a href="/ontology/unverified-authority.html">EAF-3</a>, <a href="/ontology/authority-scope-mismatch.html">EAF-4</a>). Evidence is bound to the artifact and current (<a href="/ontology/missing-evidence.html">EAF-6</a>, <a href="/ontology/stale-evidence.html">EAF-7</a>). A JExec Record is produced for every decision and stored append-only (<a href="/ontology/unrecorded-decision.html">EAF-10</a>).</p>
+<p><strong>Requirements.</strong> A1, plus: authenticated per-actor identity (including per-agent identity); verified authority with scope comparison; evidence bound to content hashes or versions with defined validity; a stored record for every decision, including allows.</p>
+
+<h3><span class="badge b-allow">A3</span> Enforced</h3>
+<p>The verdict gates execution. A <span class="verdict v-deny">DENY</span> structurally prevents the mutation; an <span class="verdict v-escalate">ESCALATE</span> suspends it until a distinct authority decides. Irreversible classes are gated asymmetrically with declared reversal or review paths (<a href="/ontology/irreversibility-blindness.html">EAF-9</a>). No bypass lane exists that does not itself produce an escalation record.</p>
+<p><strong>Requirements.</strong> A2, plus: decisions computed by the <a href="/protocol.html">protocol rules</a>, not ad-hoc judgment; deny blocks, escalate suspends; asymmetric gating for irreversible risk classes; bypass paths emit escalation records; records are append-only and independently retained.</p>
+
+<h2>Level summary</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>Level</th><th>Name</th><th>One-line test</th><th>Failure classes closed</th></tr></thead>
+<tbody>
+<tr><td><span class="badge b-deny">A0</span></td><td>Ungoverned</td><td>“It ran because it could.”</td><td>None</td></tr>
+<tr><td><span class="badge b-warn">A1</span></td><td>Declared</td><td>“Every execution states the seven fields before it runs.”</td><td>Silent EAF-1, EAF-5, EAF-8</td></tr>
+<tr><td><span class="badge b-escalate">A2</span></td><td>Verified</td><td>“Declarations are authenticated, checked, and recorded.”</td><td>EAF-2, EAF-3, EAF-4, EAF-6, EAF-7, EAF-10</td></tr>
+<tr><td><span class="badge b-allow">A3</span></td><td>Enforced</td><td>“A deny is structurally incapable of mutating state.”</td><td>EAF-9, and bypass of all others</td></tr>
+</tbody>
+</table></div>
+
+<h2>Using the Standard honestly</h2>
+<ul>
+<li><strong>Grade paths, not organizations.</strong> “We are JAS A2” is meaningless; “our production deploy path is A2” is checkable.</li>
+<li><strong>Self-assessment only.</strong> JExec is a specification, not a certification authority; there is no JAS certificate, and any product claiming one is misusing the name. See the <a href="/governance.html">claims policy</a>.</li>
+<li><strong>A1 is a real achievement.</strong> The jump from A0 to A1 — from undeclared to declared — removes more incident surface than any later jump, and costs the least.</li>
+<li><strong>Agents change nothing and everything.</strong> The levels apply to an agent’s tool-execution path exactly as to a deploy pipeline. What changes is volume: an A0 human path produces occasional incidents; an A0 agent path produces them at machine speed.</li>
+</ul>
+
+<p>The Standard is published machine-readably at <a href="/api/standard.json"><code>/api/standard.json</code></a>. To evaluate a single intended execution rather than a path, use <a href="/check.html">JExec Check</a>. To have one of your paths graded by the specification’s author, see the <a href="/review.html">Execution Admissibility Review</a>.</p>
+<p class="muted small">JAS is versioned under the <a href="/governance.html">governance policy</a>. Level definitions are appended or revised with version increments, never silently.</p>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

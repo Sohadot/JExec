@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-4 Authority–Scope Mismatch — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="Verified authority exists — for a different scope than the one this execution mutates. EAF-4 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/authority-scope-mismatch.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-4 — Authority–Scope Mismatch", "termCode": "EAF-4", "description": "Verified authority exists — for a different scope than the one this execution mutates.", "url": "https://jexec.com/ontology/authority-scope-mismatch.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-4</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-4 — Authority–Scope Mismatch</h1>
+<p class="lede">Verified authority exists — for a different scope than the one this execution mutates.</p>
+<p><span class="badge b-deny">DENY</span> <span class="muted small">authority explicitly does not cover the declared scope</span><br> <span class="badge b-escalate">ESCALATE</span> <span class="muted small">coverage partial or unknown</span><br></p>
+
+<h2>Definition</h2>
+<p>The execution carries real, verified authority — but that authority covers a different environment, system, or object set than the one about to be mutated. A staging approval reused for production. A change request for service A cited while mutating service B.</p>
+<p>This class is the most dangerous in systems that check authorization as a boolean. “Is the actor authorized?” returns true; “is the actor authorized <em>for this scope</em>?” was never asked.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Approvals with no scope written into them, reused across environments.</li>
+<li>Wildcard roles (“admin on the account”) treated as intent-specific permission.</li>
+<li>Change requests cited by executions that touch systems the request never mentions.</li>
+<li>Agents granted write-capable tools when their authorized task only requires reading.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>An agent is authorized to triage issues in one repository. Its tool grant, however, spans the whole organization, and it “helpfully” edits a workflow file in another repo. Authority existed; coverage did not.</p>
+<h3>CI / pipeline</h3>
+<p>A pipeline approved to deploy to staging is re-pointed at production during an incident. The approval it carries is real and verified — for staging.</p>
+<h3>Human operator</h3>
+<p>A DBA authorized to migrate the analytics database runs the same migration on the transactional database “while at it.”</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Authority that is not bound to a scope is ambient power, and ambient power expands silently. The admissibility question is comparative: does the coverage of the verified authority contain the declared scope of this execution? A boundary that skips the comparison converts every broad role into a standing production permission.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Bind every approval and role to an explicit scope, and write that scope into the record.</li>
+<li>Compare authority coverage against declared scope at the boundary — as data, not as judgment.</li>
+<li>Expire scope bindings; grant agents least-scope tools per task, not per platform.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>authority</code>, <code>scope</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-4 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/unverified-authority.html">EAF-3 Unverified Authority</a> · <a href="/ontology/unbounded-scope.html">EAF-5 Unbounded Scope</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/unverified-authority.html">← EAF-3 Unverified Authority</a><a href="/ontology/unbounded-scope.html">EAF-5 Unbounded Scope →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-6 Missing Evidence — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="Nothing supports that this execution should happen — no tests, no approval reference, no provenance, no policy match. EAF-6 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/missing-evidence.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-6 — Missing Evidence", "termCode": "EAF-6", "description": "Nothing supports that this execution should happen — no tests, no approval reference, no provenance, no policy match.", "url": "https://jexec.com/ontology/missing-evidence.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-6</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-6 — Missing Evidence</h1>
+<p class="lede">Nothing supports that this execution should happen — no tests, no approval reference, no provenance, no policy match.</p>
+<p><span class="badge b-deny">DENY</span> <span class="muted small">evidence missing for an irreversible or unclassified mutation</span><br> <span class="badge b-escalate">ESCALATE</span> <span class="muted small">evidence missing for a reversible mutation</span><br></p>
+
+<h2>Definition</h2>
+<p>The execution arrives at the boundary with an empty evidence set for its risk class: no passing tests, no approval pointer, no signed artifact, no policy match, no risk assessment. It may still be the right thing to run. Nothing on the record supports that.</p>
+<p>Evidence is what converts “we believe this is admissible” into a decision that can be inspected, compared, and challenged. Without it, the verdict is faith — and faith does not survive incident review.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Deploy paths where test stages are skippable and skipped.</li>
+<li>“Hotfix” lanes that bypass every check and leave no compensating record.</li>
+<li>Agent actions justified only by the model’s own output, with no external verification attached.</li>
+<li>Records whose <code>evidence</code> array is structurally present and always empty.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>An agent concludes a config value is wrong and rewrites it in production. The only support is the agent’s own reasoning — no test, no approval, no policy reference travels with the mutation.</p>
+<h3>CI / pipeline</h3>
+<p>A release job publishes an artifact whose test stage was cancelled to save time. The publish step neither knows nor cares.</p>
+<h3>Human operator</h3>
+<p>A schema migration is applied because “it worked locally.”</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Admissibility without evidence is assertion. The requirement is proportional, not absolute: a read-only job needs almost nothing; an irreversible production mutation needs approval, provenance, and verification. The protocol’s asymmetry — deny when irreversible, escalate when reversible — encodes that proportionality.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Define evidence requirements per risk class once, in the Standard, instead of per pipeline forever.</li>
+<li>Block irreversible mutations with empty evidence sets; there is no legitimate case for them.</li>
+<li>Make bypass lanes produce escalation records rather than silence — an emergency is a reason to record more, not less.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>evidence</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-6 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/stale-evidence.html">EAF-7 Stale Evidence</a> · <a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/unbounded-scope.html">← EAF-5 Unbounded Scope</a><a href="/ontology/stale-evidence.html">EAF-7 Stale Evidence →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

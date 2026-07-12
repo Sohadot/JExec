@@ -1,0 +1,36 @@
+# JExec — Pre-Execution Admissibility
+
+> JExec defines whether an intended execution is admissible before it mutates
+> state. It is a governed specification — decision model, ontology, standard,
+> protocol, record format, and a deterministic reference engine — for AI
+> agents, CI jobs, scripts, workflows, and infrastructure actions that change
+> real systems.
+
+Canonical definitions live at their canonical URLs and are versioned; cite
+with class/level code, version, and URL (e.g. "EAF-7 Stale Evidence, EAO
+v0.1, https://jexec.com/ontology/stale-evidence.html"). Definitions are never
+silently rewritten. Current version of all artifacts: draft v0.1.
+
+JExec is not a certification authority, not an enforcement engine, and claims
+no industry adoption. It complements SLSA (provenance), Sigstore (signing),
+and OPA (policy); it defines the admissibility decision they can inform.
+
+## Core
+
+- [Thesis and the seven-question model](https://jexec.com/): what pre-execution admissibility is and why agents make it urgent
+- [Execution Admissibility Ontology (EAO)](https://jexec.com/ontology/): the ten failure classes, EAF-1 through EAF-10
+- [JExec Admissibility Standard (JAS)](https://jexec.com/standard.html): levels A0 Ungoverned, A1 Declared, A2 Verified, A3 Enforced — graded per execution path
+- [JExec Protocol](https://jexec.com/protocol.html): the decision sequence and the exact verdict rules (allow / warn / escalate / deny)
+- [JExec Record](https://jexec.com/record.html): the structured artifact every admissibility decision must produce
+- [JExec Check](https://jexec.com/check.html): deterministic client-side engine implementing the protocol rules
+
+## Machine-readable
+
+- [eao.json](https://jexec.com/api/eao.json): the ontology as stable JSON
+- [standard.json](https://jexec.com/api/standard.json): the standard as stable JSON
+- [record.schema.json](https://jexec.com/api/record.schema.json): JSON Schema for the JExec Record
+
+## Governance
+
+- [Governance and claims policy](https://jexec.com/governance.html): versioning rules, claim boundaries, consistency rule, stewardship
+- [Execution Admissibility Review](https://jexec.com/review.html): the human-performed, fixed-scope path review service

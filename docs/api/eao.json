@@ -1,0 +1,245 @@
+{
+  "name": "Execution Admissibility Ontology (EAO)",
+  "shortName": "EAO",
+  "version": "0.1",
+  "status": "draft",
+  "publisher": "JExec — Pre-Execution Admissibility",
+  "canonical": "https://jexec.com/ontology/",
+  "license": "Text © JExec. Cite with attribution and a link to the canonical URL.",
+  "definition": "A classification of the ways an intended execution fails to be admissible before it mutates state.",
+  "verdicts": [
+    "allow",
+    "warn",
+    "escalate",
+    "deny"
+  ],
+  "classes": [
+    {
+      "code": "EAF-1",
+      "name": "Unstated Intent",
+      "url": "https://jexec.com/ontology/unstated-intent.html",
+      "summary": "The execution never declares what it is trying to do, so admissibility cannot even be evaluated.",
+      "recordFields": [
+        "intent"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "deny",
+          "condition": "intent absent"
+        },
+        {
+          "verdict": "warn",
+          "condition": "intent declared but too vague to evaluate"
+        }
+      ],
+      "related": [
+        "EAF-5",
+        "EAF-8",
+        "EAF-10"
+      ]
+    },
+    {
+      "code": "EAF-2",
+      "name": "Unattributed Actor",
+      "url": "https://jexec.com/ontology/unattributed-actor.html",
+      "summary": "There is no verified answer to the question: who or what is executing this?",
+      "recordFields": [
+        "actor"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "deny",
+          "condition": "actor unknown"
+        },
+        {
+          "verdict": "escalate",
+          "condition": "identity asserted but not authenticated"
+        }
+      ],
+      "related": [
+        "EAF-3",
+        "EAF-10"
+      ]
+    },
+    {
+      "code": "EAF-3",
+      "name": "Unverified Authority",
+      "url": "https://jexec.com/ontology/unverified-authority.html",
+      "summary": "Authority is claimed, but never verified against an identifiable source.",
+      "recordFields": [
+        "authority"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "deny",
+          "condition": "no authority source at all"
+        },
+        {
+          "verdict": "escalate",
+          "condition": "source named but not verified"
+        }
+      ],
+      "related": [
+        "EAF-2",
+        "EAF-4"
+      ]
+    },
+    {
+      "code": "EAF-4",
+      "name": "Authority–Scope Mismatch",
+      "url": "https://jexec.com/ontology/authority-scope-mismatch.html",
+      "summary": "Verified authority exists — for a different scope than the one this execution mutates.",
+      "recordFields": [
+        "authority",
+        "scope"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "deny",
+          "condition": "authority explicitly does not cover the declared scope"
+        },
+        {
+          "verdict": "escalate",
+          "condition": "coverage partial or unknown"
+        }
+      ],
+      "related": [
+        "EAF-3",
+        "EAF-5"
+      ]
+    },
+    {
+      "code": "EAF-5",
+      "name": "Unbounded Scope",
+      "url": "https://jexec.com/ontology/unbounded-scope.html",
+      "summary": "The execution cannot state its blast radius before it runs.",
+      "recordFields": [
+        "scope"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "deny",
+          "condition": "unbounded scope in production"
+        },
+        {
+          "verdict": "escalate",
+          "condition": "unbounded elsewhere, or partially bounded in production"
+        },
+        {
+          "verdict": "warn",
+          "condition": "partially bounded outside production"
+        }
+      ],
+      "related": [
+        "EAF-4",
+        "EAF-8",
+        "EAF-9"
+      ]
+    },
+    {
+      "code": "EAF-6",
+      "name": "Missing Evidence",
+      "url": "https://jexec.com/ontology/missing-evidence.html",
+      "summary": "Nothing supports that this execution should happen — no tests, no approval reference, no provenance, no policy match.",
+      "recordFields": [
+        "evidence"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "deny",
+          "condition": "evidence missing for an irreversible or unclassified mutation"
+        },
+        {
+          "verdict": "escalate",
+          "condition": "evidence missing for a reversible mutation"
+        }
+      ],
+      "related": [
+        "EAF-7",
+        "EAF-8"
+      ]
+    },
+    {
+      "code": "EAF-7",
+      "name": "Stale Evidence",
+      "url": "https://jexec.com/ontology/stale-evidence.html",
+      "summary": "Evidence exists — but it describes a system, artifact, or moment that no longer exists.",
+      "recordFields": [
+        "evidence"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "escalate",
+          "condition": "stale evidence behind an irreversible mutation"
+        },
+        {
+          "verdict": "warn",
+          "condition": "stale evidence behind a reversible mutation"
+        }
+      ],
+      "related": [
+        "EAF-6",
+        "EAF-10"
+      ]
+    },
+    {
+      "code": "EAF-8",
+      "name": "Unclassified Risk",
+      "url": "https://jexec.com/ontology/unclassified-risk.html",
+      "summary": "Nobody has said what this execution can change or damage.",
+      "recordFields": [
+        "risk"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "escalate",
+          "condition": "risk unclassified — and treated as irreversible by every evidence rule until classified"
+        }
+      ],
+      "related": [
+        "EAF-5",
+        "EAF-6",
+        "EAF-9"
+      ]
+    },
+    {
+      "code": "EAF-9",
+      "name": "Irreversibility Blindness",
+      "url": "https://jexec.com/ontology/irreversibility-blindness.html",
+      "summary": "An irreversible mutation is handled with the same casualness as a reversible one.",
+      "recordFields": [
+        "risk"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "escalate",
+          "condition": "irreversible mutation with no declared reversal or review path"
+        }
+      ],
+      "related": [
+        "EAF-5",
+        "EAF-8"
+      ]
+    },
+    {
+      "code": "EAF-10",
+      "name": "Unrecorded Decision",
+      "url": "https://jexec.com/ontology/unrecorded-decision.html",
+      "summary": "The execution may even be admissible — but no durable record of that decision will exist.",
+      "recordFields": [
+        "decision",
+        "timestamp"
+      ],
+      "defaultConsequences": [
+        {
+          "verdict": "warn",
+          "condition": "no admissibility record produced or stored"
+        }
+      ],
+      "related": [
+        "EAF-1",
+        "EAF-7"
+      ]
+    }
+  ]
+}

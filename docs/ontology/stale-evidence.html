@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-7 Stale Evidence — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="Evidence exists — but it describes a system, artifact, or moment that no longer exists. EAF-7 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/stale-evidence.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-7 — Stale Evidence", "termCode": "EAF-7", "description": "Evidence exists — but it describes a system, artifact, or moment that no longer exists.", "url": "https://jexec.com/ontology/stale-evidence.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-7</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-7 — Stale Evidence</h1>
+<p class="lede">Evidence exists — but it describes a system, artifact, or moment that no longer exists.</p>
+<p><span class="badge b-escalate">ESCALATE</span> <span class="muted small">stale evidence behind an irreversible mutation</span><br> <span class="badge b-warn">WARN</span> <span class="muted small">stale evidence behind a reversible mutation</span><br></p>
+
+<h2>Definition</h2>
+<p>The execution carries evidence that was valid once and is treated as valid forever: last week’s approval for today’s changed diff, test results from a different artifact hash, a review of a plan that has since been revised.</p>
+<p>Stale evidence is more dangerous than missing evidence because it looks like diligence. The record is populated; every field passes a presence check; and none of it describes the execution that is about to run.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Approvals granted before subsequent commits landed on the same branch.</li>
+<li>Test results bound to no artifact hash, reused across rebuilds.</li>
+<li>Re-running an old “approved” pipeline against an environment that has drifted for months.</li>
+<li>Agent plans approved once by a human, then executed repeatedly as conditions change.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>A human approves an agent’s five-step plan. By step four, earlier steps have changed the environment; the approval now describes a world that no longer exists, and step five mutates the new one.</p>
+<h3>CI / pipeline</h3>
+<p>A deployment reuses the green test run from build 4112 while shipping build 4127.</p>
+<h3>Human operator</h3>
+<p>A change board approves a migration for Saturday; it runs the following Thursday against a database three schema versions later.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>An admissibility decision is about a specific execution at a specific time. Evidence decays as the diff, the artifact, or the environment changes — and it decays silently, because nothing in most systems invalidates it. The boundary must therefore ask not “is evidence present?” but “does this evidence still describe this execution?”</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Bind evidence to content: artifact hashes, commit ranges, environment versions.</li>
+<li>Expire approvals; re-evaluate admissibility on any change to intent, scope, or artifact.</li>
+<li>For irreversible classes, one approval authorizes one execution — never a family of them.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>evidence</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-7 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/missing-evidence.html">EAF-6 Missing Evidence</a> · <a href="/ontology/unrecorded-decision.html">EAF-10 Unrecorded Decision</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/missing-evidence.html">← EAF-6 Missing Evidence</a><a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

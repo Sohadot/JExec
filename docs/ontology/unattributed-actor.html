@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-2 Unattributed Actor — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="There is no verified answer to the question: who or what is executing this? EAF-2 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/unattributed-actor.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-2 — Unattributed Actor", "termCode": "EAF-2", "description": "There is no verified answer to the question: who or what is executing this?", "url": "https://jexec.com/ontology/unattributed-actor.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-2</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-2 — Unattributed Actor</h1>
+<p class="lede">There is no verified answer to the question: who or what is executing this?</p>
+<p><span class="badge b-deny">DENY</span> <span class="muted small">actor unknown</span><br> <span class="badge b-escalate">ESCALATE</span> <span class="muted small">identity asserted but not authenticated</span><br></p>
+
+<h2>Definition</h2>
+<p>The entity requesting execution cannot be attributed: it is unauthenticated, shared, or ambient. Shared credentials, org-wide tokens, and agent processes that act under a platform identity rather than an identity of their own all produce executions with no accountable actor.</p>
+<p>Attribution is not a logging nicety. Authority is a property of an actor; if the actor is unattributed, no authority can attach to the execution at all.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>One service token used by many pipelines, so any mutation could have come from any of them.</li>
+<li>Cron jobs and daemons running as <code>admin</code> or a team account.</li>
+<li>Agent frameworks where every agent acts as the platform, with no per-agent identity and no link to the initiating human.</li>
+<li>Production access through a bastion under a shared login.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>Several autonomous agents share one API key. When one of them deletes a resource, the mutation cannot be attributed to a specific agent, a specific task, or the human who initiated it.</p>
+<h3>CI / pipeline</h3>
+<p>A runner authenticates with an organization-wide personal access token. Every repository’s pipeline mutates state as the same anonymous super-actor.</p>
+<h3>Human operator</h3>
+<p>An on-call engineer makes an emergency change through a team login. Three weeks later, nobody can say who acted.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Every downstream admissibility question presumes a subject. “Is the actor authorized?” is unanswerable when the actor is a crowd or a ghost. Unattributed executions also destroy accountability after the fact: an incident review over shared credentials ends at the credential, not at a decision-maker.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Give every executing entity its own identity — including per-agent identities distinct from the operator who launched them.</li>
+<li>Authenticate identity at the boundary and record <code>actor.type</code> and <code>actor.id</code> in the JExec Record.</li>
+<li>Forbid shared credentials for any execution classed as a mutation.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>actor</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-2 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/unverified-authority.html">EAF-3 Unverified Authority</a> · <a href="/ontology/unrecorded-decision.html">EAF-10 Unrecorded Decision</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/unstated-intent.html">← EAF-1 Unstated Intent</a><a href="/ontology/unverified-authority.html">EAF-3 Unverified Authority →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

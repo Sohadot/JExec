@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JExec — Pre-Execution Admissibility for governed automation</title>
+<meta name="description" content="JExec defines whether an intended execution is admissible before it mutates state. A decision model, ontology, standard, protocol, and record format for agents, CI, scripts, and infrastructure automation.">
+<link rel="canonical" href="https://jexec.com/">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"JExec","alternateName":"Pre-Execution Admissibility","url":"https://jexec.com/","description":"JExec defines whether an intended execution is admissible before it mutates state.","publisher":{"@type":"Organization","name":"JExec"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/" aria-current="page">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/" aria-current="page">Thesis</a>
+<a href="/ontology/">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+
+<p class="kicker">Pre-Execution Admissibility</p>
+<h1>JExec makes execution answerable<br>before it becomes irreversible.</h1>
+<p class="lede">JExec defines whether an intended execution is admissible <em>before</em> it mutates state — for AI agents, CI jobs, scripts, workflows, and infrastructure actions that change real systems.</p>
+
+<div class="boundary-hero" role="img" aria-label="Diagram: intent on one side, state on the other, separated by the JExec boundary where the admissibility decision is made.">
+  <div class="side intent-side">
+    <h2>Intent</h2>
+    <p>An agent wants to delete. A workflow wants to deploy. A script wants to migrate. A job wants to publish.</p>
+    <p class="muted small">Everything on this side is still reversible, because nothing has happened yet.</p>
+  </div>
+  <div class="rule" aria-hidden="true"></div>
+  <div class="side state-side">
+    <h2>State</h2>
+    <p><span class="verdict v-allow">ALLOW</span> · <span class="verdict v-warn">WARN</span> · <span class="verdict v-escalate">ESCALATE</span> · <span class="verdict v-deny">DENY</span></p>
+    <p class="muted small">Everything on this side is real. The only place a governed decision can exist is at the line between the two.</p>
+  </div>
+</div>
+
+<h2>The thesis</h2>
+<p>Modern automation has invested enormously in what happens <em>after</em> execution: logs, traces, alerts, postmortems. All of it describes mutations that already happened. The volume and autonomy of execution — especially agentic execution — has made the older question urgent again:</p>
+<div class="thesis-line">Is this execution admissible before it mutates state?</div>
+<p>Not “can it run” — credentials answer that. Not “did it run” — logs answer that. <strong>Should this specific execution, by this actor, under this authority, at this scope, with this evidence, at this risk, be allowed to change the world?</strong> JExec names that decision boundary, structures the decision, and defines the record it must leave behind.</p>
+
+<h2>The seven questions</h2>
+<p>Every JExec decision evaluates an intended execution against seven questions. Together they are the JExec model; each maps to fields of the <a href="/record.html">JExec Record</a> and to failure classes in the <a href="/ontology/">ontology</a>.</p>
+<div class="table-scroll"><table>
+<thead><tr><th>#</th><th>Question</th><th>Asks</th><th>Failure classes</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>Intent</strong></td><td>What is this execution trying to do?</td><td><a href="/ontology/unstated-intent.html">EAF-1</a></td></tr>
+<tr><td>2</td><td><strong>Actor</strong></td><td>Who or what is requesting it?</td><td><a href="/ontology/unattributed-actor.html">EAF-2</a></td></tr>
+<tr><td>3</td><td><strong>Authority</strong></td><td>Is the actor authorized — verifiably, for this?</td><td><a href="/ontology/unverified-authority.html">EAF-3</a>, <a href="/ontology/authority-scope-mismatch.html">EAF-4</a></td></tr>
+<tr><td>4</td><td><strong>Scope</strong></td><td>Where will it apply, and where will it stop?</td><td><a href="/ontology/unbounded-scope.html">EAF-5</a></td></tr>
+<tr><td>5</td><td><strong>Evidence</strong></td><td>What supports admissibility, and is it current?</td><td><a href="/ontology/missing-evidence.html">EAF-6</a>, <a href="/ontology/stale-evidence.html">EAF-7</a></td></tr>
+<tr><td>6</td><td><strong>Risk</strong></td><td>What can it change or damage — and can that be undone?</td><td><a href="/ontology/unclassified-risk.html">EAF-8</a>, <a href="/ontology/irreversibility-blindness.html">EAF-9</a></td></tr>
+<tr><td>7</td><td><strong>Decision</strong></td><td>What is the verdict — and will a record of it exist?</td><td><a href="/ontology/unrecorded-decision.html">EAF-10</a></td></tr>
+</tbody>
+</table></div>
+
+<h2>The system</h2>
+<p>JExec is one system with five governed parts. Each part exists because removing it re-opens a failure class.</p>
+<div class="table-scroll"><table>
+<thead><tr><th>Part</th><th>What it fixes in place</th></tr></thead>
+<tbody>
+<tr><td><a href="/ontology/"><strong>Ontology</strong></a> (EAO)</td><td>The ten ways an execution fails to be admissible. The language of the category.</td></tr>
+<tr><td><a href="/standard.html"><strong>Standard</strong></a> (JAS)</td><td>Four levels, A0–A3, grading how governed a system’s executions are. The measure of the category.</td></tr>
+<tr><td><a href="/protocol.html"><strong>Protocol</strong></a></td><td>The decision sequence and the explicit rules mapping failures to verdicts. The procedure of the category.</td></tr>
+<tr><td><a href="/record.html"><strong>Record</strong></a></td><td>The structured artifact every decision must leave behind. The memory of the category.</td></tr>
+<tr><td><a href="/check.html"><strong>Check</strong></a></td><td>A deterministic engine that runs the protocol against an intended execution and emits a record. The proof that the system operates.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Why now: agents changed the boundary</h2>
+<p>When every execution originated with a human, the admissibility decision lived implicitly in that human. Agentic systems break the assumption: an AI agent can form intent, select tools, and mutate state faster than any review process built for humans. The answer is not slower agents. The answer is a decision boundary that is <em>explicit, structural, and recorded</em> — one that treats a human operator, a CI job, and an autonomous agent as the same kind of subject: an actor whose intended execution must be admissible before it runs.</p>
+<p>JExec is deliberately positioned <em>between</em> existing systems, not over them. Use <a href="https://slsa.dev" rel="noopener">SLSA</a> for provenance, <a href="https://www.sigstore.dev" rel="noopener">Sigstore</a> for signing, <a href="https://www.openpolicyagent.org" rel="noopener">OPA</a> for policy evaluation. JExec defines the admissibility decision those systems can inform — and the record it must produce.</p>
+
+<h2>What “to JExec” means</h2>
+<p><em>To JExec an intended execution</em>: to test whether it is admissible before it runs.</p>
+<ul>
+<li>“JExec it before deploy.”</li>
+<li>“This workflow failed JExec — EAF-7, the approval predates the diff.”</li>
+<li>“No mutation without admissibility.”</li>
+<li>“Is this agent action JExec-admissible?”</li>
+</ul>
+
+<h2>Start here</h2>
+<p>Read the <a href="/ontology/">ten failure classes</a>. Grade your own pipeline against the <a href="/standard.html">Standard</a>. Then take one real, intended execution — today’s riskiest deploy, your agent’s most destructive tool — and run it through <a href="/check.html">JExec Check</a>. The verdict takes two minutes. The record is yours to keep.</p>
+
+<p class="muted small">JExec is an early, governed specification (draft v0.1). It claims no adoption, no certification authority, and no enforcement role — see the <a href="/governance.html">claims policy</a>. What it claims is smaller and harder: a precise definition of a decision most systems currently make by accident.</p>
+
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

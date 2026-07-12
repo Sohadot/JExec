@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JExec Protocol — the admissibility decision sequence and verdict rules</title>
+<meta name="description" content="The JExec Protocol defines the seven-step admissibility decision sequence and the explicit rules that map failure classes to verdicts: allow, warn, escalate, deny.">
+<link rel="canonical" href="https://jexec.com/protocol.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"JExec Protocol","url":"https://jexec.com/protocol.html","description":"The seven-step admissibility decision sequence and the explicit rules mapping failure classes to verdicts.","isPartOf":{"@type":"WebSite","name":"JExec","url":"https://jexec.com/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html" aria-current="page">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="kicker">Reference · Protocol v0.1 (draft)</p>
+<h1>JExec Protocol</h1>
+<p class="lede">A verdict nobody can predict is a judgment, not a protocol. This page publishes the exact rules — the same rules <a href="/check.html">JExec Check</a> executes, with nothing held back.</p>
+
+<h2>The sequence</h2>
+<p>An admissibility decision proceeds through the seven questions of the <a href="/">JExec model</a>, in order, against a declared intended execution. Each step either passes or emits one or more failure classes from the <a href="/ontology/">Execution Admissibility Ontology</a>. The verdict is then computed from the emitted classes — never improvised.</p>
+<ol>
+<li><strong>Intent</strong> — is a specific intended change declared? (<a href="/ontology/unstated-intent.html">EAF-1</a>)</li>
+<li><strong>Actor</strong> — is the requesting entity attributed and authenticated? (<a href="/ontology/unattributed-actor.html">EAF-2</a>)</li>
+<li><strong>Authority</strong> — is authority named, verified, and does its coverage contain the declared scope? (<a href="/ontology/unverified-authority.html">EAF-3</a>, <a href="/ontology/authority-scope-mismatch.html">EAF-4</a>)</li>
+<li><strong>Scope</strong> — is the blast radius bounded and stated? (<a href="/ontology/unbounded-scope.html">EAF-5</a>)</li>
+<li><strong>Evidence</strong> — is supporting evidence present and does it still describe this execution? (<a href="/ontology/missing-evidence.html">EAF-6</a>, <a href="/ontology/stale-evidence.html">EAF-7</a>)</li>
+<li><strong>Risk</strong> — is the mutation classified, and is irreversibility acknowledged with a reversal or review path? (<a href="/ontology/unclassified-risk.html">EAF-8</a>, <a href="/ontology/irreversibility-blindness.html">EAF-9</a>)</li>
+<li><strong>Decision</strong> — will the verdict leave a durable record? (<a href="/ontology/unrecorded-decision.html">EAF-10</a>)</li>
+</ol>
+
+<h2>The four verdicts</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>Verdict</th><th>Meaning</th><th>Severity</th></tr></thead>
+<tbody>
+<tr><td><span class="verdict v-allow">ALLOW</span></td><td>No failure class detected. The execution is admissible as declared.</td><td>0</td></tr>
+<tr><td><span class="verdict v-warn">WARN</span></td><td>Admissible, with findings that must appear on the record.</td><td>1</td></tr>
+<tr><td><span class="verdict v-escalate">ESCALATE</span></td><td>Not decidable at this boundary. Execution suspends until a distinct authority decides.</td><td>2</td></tr>
+<tr><td><span class="verdict v-deny">DENY</span></td><td>Inadmissible as declared. The mutation must not proceed.</td><td>3</td></tr>
+</tbody>
+</table></div>
+
+<h2>The verdict rules</h2>
+<p>Each detected failure class yields a consequence, conditioned on two context facts: whether the target scope is <strong>production</strong> (customer-facing or business-critical state) and whether the risk class is <strong>irreversible</strong>. The overall verdict is the <em>most severe</em> consequence emitted.</p>
+<div class="table-scroll"><table>
+<thead><tr><th>Class</th><th>Condition</th><th>Consequence</th></tr></thead>
+<tbody>
+<tr><td rowspan="2"><a href="/ontology/unstated-intent.html">EAF-1 Unstated Intent</a></td><td>intent absent</td><td><span class="verdict v-deny">DENY</span></td></tr>
+<tr><td>intent vague</td><td><span class="verdict v-warn">WARN</span></td></tr>
+<tr><td rowspan="2"><a href="/ontology/unattributed-actor.html">EAF-2 Unattributed Actor</a></td><td>actor unknown</td><td><span class="verdict v-deny">DENY</span></td></tr>
+<tr><td>asserted, unauthenticated</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td rowspan="2"><a href="/ontology/unverified-authority.html">EAF-3 Unverified Authority</a></td><td>no source</td><td><span class="verdict v-deny">DENY</span></td></tr>
+<tr><td>source named, unverified</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td rowspan="2"><a href="/ontology/authority-scope-mismatch.html">EAF-4 Authority–Scope Mismatch</a></td><td>coverage explicitly absent</td><td><span class="verdict v-deny">DENY</span></td></tr>
+<tr><td>coverage partial / unknown</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td rowspan="3"><a href="/ontology/unbounded-scope.html">EAF-5 Unbounded Scope</a></td><td>unbounded, production</td><td><span class="verdict v-deny">DENY</span></td></tr>
+<tr><td>unbounded, non-production</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td>partially bounded</td><td><span class="verdict v-warn">WARN</span> <span class="muted small">(ESCALATE in production)</span></td></tr>
+<tr><td rowspan="2"><a href="/ontology/missing-evidence.html">EAF-6 Missing Evidence</a></td><td>risk irreversible or unclassified</td><td><span class="verdict v-deny">DENY</span></td></tr>
+<tr><td>risk reversible</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td rowspan="2"><a href="/ontology/stale-evidence.html">EAF-7 Stale Evidence</a></td><td>risk irreversible or unclassified</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td>risk reversible</td><td><span class="verdict v-warn">WARN</span></td></tr>
+<tr><td><a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk</a></td><td>always</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td><a href="/ontology/irreversibility-blindness.html">EAF-9 Irreversibility Blindness</a></td><td>irreversible, no reversal/review path</td><td><span class="verdict v-escalate">ESCALATE</span></td></tr>
+<tr><td><a href="/ontology/unrecorded-decision.html">EAF-10 Unrecorded Decision</a></td><td>always</td><td><span class="verdict v-warn">WARN</span></td></tr>
+</tbody>
+</table></div>
+
+<h2>The two conservative defaults</h2>
+<ol>
+<li><strong>Unknown risk is worst-case risk.</strong> An unclassified risk class is treated as irreversible by every evidence rule (EAF-6, EAF-7). Ignorance must be expensive in the safe direction, so that classification becomes the cheap path.</li>
+<li><strong>Undecidable is not allowable.</strong> Where the boundary lacks the facts to decide — unverified authority, unknown coverage, unbounded non-production scope — the verdict is <span class="verdict v-escalate">ESCALATE</span>, never a benefit-of-the-doubt allow. The boundary’s job is to refuse to guess.</li>
+</ol>
+
+<h2>Properties</h2>
+<ul>
+<li><strong>Deterministic.</strong> The same declared execution always yields the same verdict. Two independent implementations of this table must agree, or one of them is wrong.</li>
+<li><strong>Monotone.</strong> Adding a failure class can never improve the verdict.</li>
+<li><strong>Explainable.</strong> The verdict cites the classes that produced it. A <span class="verdict v-deny">DENY</span> without named classes is not a JExec decision.</li>
+<li><strong>Complete.</strong> Every decision — including <span class="verdict v-allow">ALLOW</span> — emits a <a href="/record.html">JExec Record</a>.</li>
+</ul>
+
+<p>Run the protocol interactively at <a href="/check.html">JExec Check</a>, or read the record format it produces at <a href="/record.html">JExec Record</a>.</p>
+<p class="muted small">The protocol is versioned under the <a href="/governance.html">governance policy</a>. Rule changes increment the version and are logged; verdicts computed under older versions remain interpretable via the version field of their records.</p>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

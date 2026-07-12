@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-9 Irreversibility Blindness — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="An irreversible mutation is handled with the same casualness as a reversible one. EAF-9 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/irreversibility-blindness.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-9 — Irreversibility Blindness", "termCode": "EAF-9", "description": "An irreversible mutation is handled with the same casualness as a reversible one.", "url": "https://jexec.com/ontology/irreversibility-blindness.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-9</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-9 — Irreversibility Blindness</h1>
+<p class="lede">An irreversible mutation is handled with the same casualness as a reversible one.</p>
+<p><span class="badge b-escalate">ESCALATE</span> <span class="muted small">irreversible mutation with no declared reversal or review path</span><br></p>
+
+<h2>Definition</h2>
+<p>The execution will destroy information or commit external effects — a deletion, a dropped column, a sent email, a financial transfer, a published artifact — and the decision path treats it like an ordinary write: same checks, same speed, no reversal path declared, no distinct review.</p>
+<p>The failure is not the irreversibility itself. Some executions must be irreversible. The failure is blindness: the boundary never registered that this one is different.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Deletes gated identically to updates in the same pipeline.</li>
+<li>“We have backups” asserted as a reversal path and never tested as one.</li>
+<li>External side effects — messages, payments, releases — triggered inside loops or retries.</li>
+<li>Agents granted destructive tools alongside read tools with equal standing and equal friction.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>A retry wrapper around an agent’s “send notification” tool re-fires on timeout. The timeouts were delivery delays. Four thousand customers receive the message three times; no reversal path exists because none was ever declared.</p>
+<h3>CI / pipeline</h3>
+<p>A cleanup stage permanently deletes storage buckets on the same approval that reorders a config map.</p>
+<h3>Human operator</h3>
+<p>An engineer drops a “deprecated” table during a routine change window. The backup that would have made this reversible expired quietly months earlier.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Reversible errors are an engineering cost; irreversible errors are permanent state. A boundary that prices them identically prices catastrophe and inconvenience the same, and will eventually pay the difference. Admissibility for irreversible classes must be asymmetric: stronger evidence, distinct authority, and a declared reversal path — or a declared, deliberate acceptance that there is none.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Declare a reversal path — or an explicit review acknowledging its absence — for every irreversible class.</li>
+<li>Gate asymmetrically: irreversible mutations require stronger evidence and a distinct authority source.</li>
+<li>Stage external effects behind holds; never place irreversible calls inside automatic retry loops.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>risk</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-9 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/unbounded-scope.html">EAF-5 Unbounded Scope</a> · <a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/unclassified-risk.html">← EAF-8 Unclassified Risk</a><a href="/ontology/unrecorded-decision.html">EAF-10 Unrecorded Decision →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

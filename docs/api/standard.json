@@ -1,0 +1,68 @@
+{
+  "name": "JExec Admissibility Standard (JAS)",
+  "shortName": "JAS",
+  "version": "0.1",
+  "status": "draft",
+  "publisher": "JExec — Pre-Execution Admissibility",
+  "canonical": "https://jexec.com/standard.html",
+  "definition": "Four levels grading how governed a system's executions are before they mutate state. A level is a property of an execution path, not of an organization.",
+  "unitOfAssessment": "execution path",
+  "certification": "None. JAS is a self-assessment specification. No certificate exists and none may be claimed.",
+  "levels": [
+    {
+      "id": "A0",
+      "name": "Ungoverned",
+      "test": "It ran because it could.",
+      "summary": "No admissibility decision exists before execution; governance is post-hoc (logs, alerts, incident review).",
+      "requirements": [],
+      "closes": []
+    },
+    {
+      "id": "A1",
+      "name": "Declared",
+      "test": "Every execution states the seven fields before it runs.",
+      "summary": "Intent, actor, authority, scope, evidence, risk, and intended decision are declared and stored before execution. Nothing is yet verified.",
+      "requirements": [
+        "All seven JExec Record fields declared before every execution on the path",
+        "Declarations stored with the execution",
+        "Mechanism-grade intents rejected"
+      ],
+      "closes": ["EAF-1 (silent form)", "EAF-5 (silent form)", "EAF-8 (silent form)"]
+    },
+    {
+      "id": "A2",
+      "name": "Verified",
+      "test": "Declarations are authenticated, checked, and recorded.",
+      "summary": "Actor identity authenticated; authority verified with scope comparison; evidence bound to content and current; a JExec Record stored for every decision including allows.",
+      "requirements": [
+        "A1",
+        "Authenticated per-actor identity, including per-agent identity",
+        "Verified authority with named source, verifier, and scope-coverage comparison",
+        "Evidence bound to content hashes or versions, with defined validity",
+        "A stored record for every decision, including allows"
+      ],
+      "closes": ["EAF-2", "EAF-3", "EAF-4", "EAF-6", "EAF-7", "EAF-10"]
+    },
+    {
+      "id": "A3",
+      "name": "Enforced",
+      "test": "A deny is structurally incapable of mutating state.",
+      "summary": "The verdict gates execution: deny blocks, escalate suspends until a distinct authority decides; irreversible classes gated asymmetrically; bypass lanes emit escalation records.",
+      "requirements": [
+        "A2",
+        "Verdicts computed by the published protocol rules",
+        "Deny structurally blocks the mutation; escalate suspends it",
+        "Asymmetric gating and declared reversal/review paths for irreversible risk classes",
+        "Bypass paths emit escalation records",
+        "Records append-only and independently retained"
+      ],
+      "closes": ["EAF-9", "bypass of all other classes"]
+    }
+  ],
+  "relatedResources": {
+    "ontology": "https://jexec.com/api/eao.json",
+    "recordSchema": "https://jexec.com/api/record.schema.json",
+    "protocol": "https://jexec.com/protocol.html",
+    "engine": "https://jexec.com/check.html"
+  }
+}

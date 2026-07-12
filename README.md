@@ -211,6 +211,27 @@ Use JExec for execution admissibility.
 
 ---
 
+System Architecture / Reference Map
+
+The asset is one governed system. Each part exists because removing it re-opens a failure class.
+
+| Layer | Artifact | Location |
+|---|---|---|
+| Thesis | Pre-Execution Admissibility, the seven-question model | docs/index.html |
+| Ontology | Execution Admissibility Ontology (EAO) — ten failure classes EAF-1…EAF-10 | docs/ontology/ |
+| Standard | JExec Admissibility Standard (JAS) — levels A0–A3 per execution path | docs/standard.html |
+| Protocol | Decision sequence + published verdict rules | docs/protocol.html |
+| Record | Decision artifact + JSON Schema | docs/record.html, docs/api/record.schema.json |
+| Engine | JExec Check — deterministic client-side implementation of the protocol | docs/check.html, docs/assets/check.js |
+| Agent layer | llms.txt, eao.json, standard.json | docs/llms.txt, docs/api/ |
+| Governance | Claims policy, versioning rules, append-only decision log | governance/, docs/governance.html |
+| Revenue | Execution Admissibility Review (trust-compatible income) | docs/review.html |
+| Strategy | Sovereign asset plan (11 layers, buyer logic, roadmap) | ASSET_INTELLIGENCE_FACTORY_PLAN.md |
+
+The consistency rule: the protocol table and the Check engine must implement identical rules. Divergence is a governance incident, not a bug.
+
+---
+
 Current Status
 
 JExec is in early specification development.

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-3 Unverified Authority — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="Authority is claimed, but never verified against an identifiable source. EAF-3 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/unverified-authority.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-3 — Unverified Authority", "termCode": "EAF-3", "description": "Authority is claimed, but never verified against an identifiable source.", "url": "https://jexec.com/ontology/unverified-authority.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-3</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-3 — Unverified Authority</h1>
+<p class="lede">Authority is claimed, but never verified against an identifiable source.</p>
+<p><span class="badge b-deny">DENY</span> <span class="muted small">no authority source at all</span><br> <span class="badge b-escalate">ESCALATE</span> <span class="muted small">source named but not verified</span><br></p>
+
+<h2>Definition</h2>
+<p>The execution asserts that it is permitted — “approved”, “authorized”, “routine” — without an identifiable, checkable source of that permission: no policy, no approval reference, no role grant, no change request.</p>
+<p>The most common form is silent: authority is inferred from capability. The token works, therefore the action must be allowed. JExec treats this inference as the central confusion of automated systems. Credentials prove that the system <em>will</em> obey; they say nothing about whether it <em>should</em>.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>“Approved in chat” with no durable reference.</li>
+<li>The requesting actor approving its own execution.</li>
+<li>Pipelines that deploy because the secrets are present, not because a deploy was authorized.</li>
+<li>Agents assuming the full standing authority of their operator for every sub-action, indefinitely.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>An agent holds a repository-admin token and force-pushes to a protected branch. Nothing authorized the force-push; the token’s capability was silently treated as permission.</p>
+<h3>CI / pipeline</h3>
+<p>A release pipeline promotes an artifact to production whenever it reaches the final stage. The “authority” is the pipeline’s structure itself — unverifiable and unowned.</p>
+<h3>Human operator</h3>
+<p>An engineer with production database access corrects live data by hand. Access existed; authority for this change was never established.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>An admissibility decision must be able to point at the source of the authority it relied on, and at who or what verified it. Otherwise the verdict reduces to “the actor was able to,” which is precisely the condition JExec exists to interrogate. Capability without verified authority is how automation scales mistakes into incidents.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Name the authority source in the record: policy, role, manual approval, change request, signed release — with a reference.</li>
+<li>Record verification: <code>authority.verified</code>, the verifier, and the evidence pointer.</li>
+<li>Keep the requesting actor and the verifying authority distinct; self-approval is absence of approval.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>authority</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-3 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/unattributed-actor.html">EAF-2 Unattributed Actor</a> · <a href="/ontology/authority-scope-mismatch.html">EAF-4 Authority–Scope Mismatch</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/unattributed-actor.html">← EAF-2 Unattributed Actor</a><a href="/ontology/authority-scope-mismatch.html">EAF-4 Authority–Scope Mismatch →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

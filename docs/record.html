@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JExec Record — the structured artifact of an admissibility decision</title>
+<meta name="description" content="The JExec Record is the structured, inspectable artifact every admissibility decision must leave behind: intent, actor, authority, scope, evidence, risk, findings, and verdict. JSON Schema included.">
+<link rel="canonical" href="https://jexec.com/record.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"JExec Record","url":"https://jexec.com/record.html","description":"The structured, inspectable artifact every admissibility decision must leave behind.","isPartOf":{"@type":"WebSite","name":"JExec","url":"https://jexec.com/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html" aria-current="page">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="kicker">Reference · Record v0.1 (draft)</p>
+<h1>JExec Record</h1>
+<p class="lede">A decision that leaves no record cannot be inspected, compared, or later distinguished from no decision at all. The Record is the memory of the boundary.</p>
+
+<p>Every JExec decision — <span class="verdict v-allow">ALLOW</span> included — produces one Record: a small, structured document declaring what was intended, by whom, under what authority, at what scope, on what evidence, at what risk, and what was decided. Records are written <em>before</em> the mutation and stored append-only, so the decision exists independently of whether the execution later succeeds, fails, or is disputed.</p>
+
+<h2>Example</h2>
+<pre><code>{
+  "jexec_version": "0.1",
+  "intent": "deploy payment-service build 4127 to production",
+  "actor": { "type": "ci_job", "id": "github-actions/deploy.yml@refs/tags/v2.4.1" },
+  "authority": {
+    "source": "manual_approval",
+    "reference": "CHG-2214",
+    "verified": true,
+    "verifier": "release-manager",
+    "covers_scope": true
+  },
+  "scope": {
+    "environment": "production",
+    "system": "payment-service",
+    "bounded": true
+  },
+  "risk": {
+    "class": "state_mutation",
+    "irreversible": false,
+    "reversal_path": "rolling deploy, previous artifact retained"
+  },
+  "evidence": [
+    { "type": "tests_passed", "reference": "run-88213", "bound_to": "sha256:9f2c…" },
+    { "type": "artifact_signed", "reference": "sigstore-entry-114…" }
+  ],
+  "findings": [],
+  "decision": "allow",
+  "timestamp": "2026-07-12T10:41:00Z"
+}</code></pre>
+
+<h2>Fields</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>Field</th><th>Required</th><th>Content</th><th>Failure class if defective</th></tr></thead>
+<tbody>
+<tr><td><code>jexec_version</code></td><td>yes</td><td>Version of the protocol the verdict was computed under.</td><td>—</td></tr>
+<tr><td><code>intent</code></td><td>yes</td><td>The specific intended change: operation, object, target. One disputable sentence.</td><td><a href="/ontology/unstated-intent.html">EAF-1</a></td></tr>
+<tr><td><code>actor</code></td><td>yes</td><td>Type (<code>human</code>, <code>ai_agent</code>, <code>ci_job</code>, <code>service</code>, <code>script</code>) and an authenticated identity.</td><td><a href="/ontology/unattributed-actor.html">EAF-2</a></td></tr>
+<tr><td><code>authority</code></td><td>yes</td><td>Source, reference, verification status, verifier, and whether coverage contains the declared scope.</td><td><a href="/ontology/unverified-authority.html">EAF-3</a>, <a href="/ontology/authority-scope-mismatch.html">EAF-4</a></td></tr>
+<tr><td><code>scope</code></td><td>yes</td><td>Environment, system, object set or expected count; whether the blast radius is bounded.</td><td><a href="/ontology/unbounded-scope.html">EAF-5</a></td></tr>
+<tr><td><code>evidence</code></td><td>yes</td><td>Items with type, reference, and what content (hash, version, diff range) they are bound to.</td><td><a href="/ontology/missing-evidence.html">EAF-6</a>, <a href="/ontology/stale-evidence.html">EAF-7</a></td></tr>
+<tr><td><code>risk</code></td><td>yes</td><td>Class, irreversibility flag, and the declared reversal or review path.</td><td><a href="/ontology/unclassified-risk.html">EAF-8</a>, <a href="/ontology/irreversibility-blindness.html">EAF-9</a></td></tr>
+<tr><td><code>findings</code></td><td>yes</td><td>The EAF classes detected, each with its consequence. Empty array means clean.</td><td>—</td></tr>
+<tr><td><code>decision</code></td><td>yes</td><td><code>allow</code> · <code>warn</code> · <code>escalate</code> · <code>deny</code>, computed by the <a href="/protocol.html">protocol rules</a>.</td><td rowspan="2"><a href="/ontology/unrecorded-decision.html">EAF-10</a> if not stored</td></tr>
+<tr><td><code>timestamp</code></td><td>yes</td><td>When the decision was made — which is before the mutation, by definition.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Storage rules</h2>
+<ul>
+<li><strong>Before, not after.</strong> The record is written when the decision is made, not reconstructed from logs.</li>
+<li><strong>Append-only.</strong> Records are never edited; a changed execution is a new decision and a new record.</li>
+<li><strong>Independent.</strong> Stored outside the write path of the system being mutated, so the record survives the mutation it describes.</li>
+<li><strong>Denials are kept.</strong> A retained <span class="verdict v-deny">DENY</span> is the cheapest audit finding an organization will ever produce.</li>
+</ul>
+
+<h2>Alignment</h2>
+<p>The Record is designed to sit alongside existing attestation and event formats — in-toto-style attestations for provenance, CloudEvents-style envelopes for transport — rather than replace them. This is a design direction, not a claim of formal compatibility; see the <a href="/governance.html">claims policy</a>.</p>
+
+<h2>Schema</h2>
+<p>A JSON Schema for the Record is published at <a href="/api/record.schema.json"><code>/api/record.schema.json</code></a>. <a href="/check.html">JExec Check</a> emits records conforming to it.</p>
+<p class="muted small">The record format is versioned under the <a href="/governance.html">governance policy</a>; <code>jexec_version</code> keeps old records interpretable forever.</p>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

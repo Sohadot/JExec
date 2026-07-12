@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-5 Unbounded Scope — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="The execution cannot state its blast radius before it runs. EAF-5 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/unbounded-scope.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-5 — Unbounded Scope", "termCode": "EAF-5", "description": "The execution cannot state its blast radius before it runs.", "url": "https://jexec.com/ontology/unbounded-scope.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-5</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-5 — Unbounded Scope</h1>
+<p class="lede">The execution cannot state its blast radius before it runs.</p>
+<p><span class="badge b-deny">DENY</span> <span class="muted small">unbounded scope in production</span><br> <span class="badge b-escalate">ESCALATE</span> <span class="muted small">unbounded elsewhere, or partially bounded in production</span><br> <span class="badge b-warn">WARN</span> <span class="muted small">partially bounded outside production</span><br></p>
+
+<h2>Definition</h2>
+<p>The execution has no declared limit to where it applies: which environment, which systems, which objects. It will touch “whatever matches,” and what matches is discovered during execution rather than declared before it.</p>
+<p>Unbounded scope is the shape of most mass incidents: the recursive delete, the migration without a WHERE clause, the cleanup script that iterates over “all” resources under an account root.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Destructive statements whose selection criteria are computed at runtime and never reviewed as data.</li>
+<li>Scripts that enumerate resources dynamically with no cap and no dry-run count.</li>
+<li>Agent tools accepting arbitrary paths, arbitrary queries, or account-level handles.</li>
+<li>Infrastructure actions executed at organization or account root “for convenience.”</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>An agent asked to remove stale branches is handed a tool that can delete any ref in any repository. The task was bounded; the tool’s reach was not, and the boundary only sees the tool.</p>
+<h3>CI / pipeline</h3>
+<p>A cleanup job deletes cloud resources by tag query. A tagging error widens the match set from 12 resources to 4,000. Nothing before execution stated an expected count.</p>
+<h3>Human operator</h3>
+<p>An operator runs a recursive permission fix from one directory too high.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Risk and evidence are functions of scope. If scope is unbounded, risk is unclassifiable and no finite set of evidence can be sufficient — there is no stated claim for the evidence to support. The protocol therefore refuses unbounded scope in production outright: an execution that cannot state its blast radius has not finished asking to run.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Declare environment, system, and object set (or expected object count) in the record before execution.</li>
+<li>Require dry-run counts for match-based mutations; treat count drift as a new execution needing a new decision.</li>
+<li>Scope credentials and agent tools to the declared set; deny wildcard scopes at the production boundary.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>scope</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-5 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/authority-scope-mismatch.html">EAF-4 Authority–Scope Mismatch</a> · <a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk</a> · <a href="/ontology/irreversibility-blindness.html">EAF-9 Irreversibility Blindness</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/authority-scope-mismatch.html">← EAF-4 Authority–Scope Mismatch</a><a href="/ontology/missing-evidence.html">EAF-6 Missing Evidence →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

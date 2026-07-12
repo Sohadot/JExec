@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Execution Admissibility Ontology (EAO) — the ten failure classes — JExec</title>
+<meta name="description" content="The Execution Admissibility Ontology classifies the ten ways an intended execution fails to be admissible before it mutates state: from Unstated Intent to Unrecorded Decision.">
+<link rel="canonical" href="https://jexec.com/ontology/">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"DefinedTermSet","name":"Execution Admissibility Ontology (EAO)","url":"https://jexec.com/ontology/","description":"A classification of the ways an intended execution fails to be admissible before it mutates state.","hasDefinedTerm":[{"@type":"DefinedTerm","termCode":"EAF-1","name":"Unstated Intent","url":"https://jexec.com/ontology/unstated-intent.html"},{"@type":"DefinedTerm","termCode":"EAF-2","name":"Unattributed Actor","url":"https://jexec.com/ontology/unattributed-actor.html"},{"@type":"DefinedTerm","termCode":"EAF-3","name":"Unverified Authority","url":"https://jexec.com/ontology/unverified-authority.html"},{"@type":"DefinedTerm","termCode":"EAF-4","name":"Authority–Scope Mismatch","url":"https://jexec.com/ontology/authority-scope-mismatch.html"},{"@type":"DefinedTerm","termCode":"EAF-5","name":"Unbounded Scope","url":"https://jexec.com/ontology/unbounded-scope.html"},{"@type":"DefinedTerm","termCode":"EAF-6","name":"Missing Evidence","url":"https://jexec.com/ontology/missing-evidence.html"},{"@type":"DefinedTerm","termCode":"EAF-7","name":"Stale Evidence","url":"https://jexec.com/ontology/stale-evidence.html"},{"@type":"DefinedTerm","termCode":"EAF-8","name":"Unclassified Risk","url":"https://jexec.com/ontology/unclassified-risk.html"},{"@type":"DefinedTerm","termCode":"EAF-9","name":"Irreversibility Blindness","url":"https://jexec.com/ontology/irreversibility-blindness.html"},{"@type":"DefinedTerm","termCode":"EAF-10","name":"Unrecorded Decision","url":"https://jexec.com/ontology/unrecorded-decision.html"}]}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="kicker">Reference · EAO v0.1 (draft)</p>
+<h1>Execution Admissibility Ontology</h1>
+<p class="lede">There are only so many ways an intended execution can fail to be admissible before it mutates state. The EAO names them.</p>
+
+<p>Most execution incidents are described afterward in the vocabulary of their symptoms: the outage, the data loss, the wrong email. The EAO classifies them by the admissibility failure that let them run. Ten classes, mapped to the seven questions of the <a href="/">JExec model</a>. Each class page defines the failure, shows how it appears across agents, CI, and human operators, explains why it defeats admissibility, and states its default consequence under the <a href="/protocol.html">JExec Protocol</a>.</p>
+
+<div class="thesis-line">An execution that exhibits none of these ten classes is admissible. That is the definition, not a slogan.</div>
+
+<h2>The ten classes</h2>
+<ul class="class-grid">
+<li class="class-card"><a href="/ontology/unstated-intent.html"><span class="code">EAF-1 · INTENT</span><p class="name">Unstated Intent</p><p class="gist">The execution never declares what it is trying to do, so admissibility cannot even be evaluated.</p></a></li>
+<li class="class-card"><a href="/ontology/unattributed-actor.html"><span class="code">EAF-2 · ACTOR</span><p class="name">Unattributed Actor</p><p class="gist">No verified answer to the question: who or what is executing this?</p></a></li>
+<li class="class-card"><a href="/ontology/unverified-authority.html"><span class="code">EAF-3 · AUTHORITY</span><p class="name">Unverified Authority</p><p class="gist">Authority is claimed, but never verified against an identifiable source.</p></a></li>
+<li class="class-card"><a href="/ontology/authority-scope-mismatch.html"><span class="code">EAF-4 · AUTHORITY×SCOPE</span><p class="name">Authority–Scope Mismatch</p><p class="gist">Verified authority exists — for a different scope than the one being mutated.</p></a></li>
+<li class="class-card"><a href="/ontology/unbounded-scope.html"><span class="code">EAF-5 · SCOPE</span><p class="name">Unbounded Scope</p><p class="gist">The execution cannot state its blast radius before it runs.</p></a></li>
+<li class="class-card"><a href="/ontology/missing-evidence.html"><span class="code">EAF-6 · EVIDENCE</span><p class="name">Missing Evidence</p><p class="gist">Nothing on the record supports that this execution should happen.</p></a></li>
+<li class="class-card"><a href="/ontology/stale-evidence.html"><span class="code">EAF-7 · EVIDENCE</span><p class="name">Stale Evidence</p><p class="gist">Evidence exists — for a system, artifact, or moment that no longer exists.</p></a></li>
+<li class="class-card"><a href="/ontology/unclassified-risk.html"><span class="code">EAF-8 · RISK</span><p class="name">Unclassified Risk</p><p class="gist">Nobody has said what this execution can change or damage.</p></a></li>
+<li class="class-card"><a href="/ontology/irreversibility-blindness.html"><span class="code">EAF-9 · RISK</span><p class="name">Irreversibility Blindness</p><p class="gist">An irreversible mutation is handled as if it could be undone.</p></a></li>
+<li class="class-card"><a href="/ontology/unrecorded-decision.html"><span class="code">EAF-10 · DECISION</span><p class="name">Unrecorded Decision</p><p class="gist">The decision may be sound — but no record of it will exist.</p></a></li>
+</ul>
+
+<h2>How the classes map to the model</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>Model question</th><th>Failure classes</th></tr></thead>
+<tbody>
+<tr><td>1 · Intent</td><td><a href="/ontology/unstated-intent.html">EAF-1 Unstated Intent</a></td></tr>
+<tr><td>2 · Actor</td><td><a href="/ontology/unattributed-actor.html">EAF-2 Unattributed Actor</a></td></tr>
+<tr><td>3 · Authority</td><td><a href="/ontology/unverified-authority.html">EAF-3 Unverified Authority</a>, <a href="/ontology/authority-scope-mismatch.html">EAF-4 Authority–Scope Mismatch</a></td></tr>
+<tr><td>4 · Scope</td><td><a href="/ontology/unbounded-scope.html">EAF-5 Unbounded Scope</a></td></tr>
+<tr><td>5 · Evidence</td><td><a href="/ontology/missing-evidence.html">EAF-6 Missing Evidence</a>, <a href="/ontology/stale-evidence.html">EAF-7 Stale Evidence</a></td></tr>
+<tr><td>6 · Risk</td><td><a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk</a>, <a href="/ontology/irreversibility-blindness.html">EAF-9 Irreversibility Blindness</a></td></tr>
+<tr><td>7 · Decision</td><td><a href="/ontology/unrecorded-decision.html">EAF-10 Unrecorded Decision</a></td></tr>
+</tbody>
+</table></div>
+
+<h2>Using the ontology</h2>
+<p>Run an intended execution through <a href="/check.html">JExec Check</a> to detect these classes deterministically and produce a <a href="/record.html">JExec Record</a>. Measure a system’s overall posture against the <a href="/standard.html">JExec Admissibility Standard</a>. The ontology is also published as machine-readable JSON at <a href="/api/eao.json"><code>/api/eao.json</code></a> for agents and tooling.</p>
+<p class="muted small">The EAO is versioned under the JExec <a href="/governance.html">governance policy</a>. Classes are appended, never silently redefined.</p>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-10 Unrecorded Decision — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="The execution may even be admissible — but no durable record of that decision will exist. EAF-10 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/unrecorded-decision.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-10 — Unrecorded Decision", "termCode": "EAF-10", "description": "The execution may even be admissible — but no durable record of that decision will exist.", "url": "https://jexec.com/ontology/unrecorded-decision.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-10</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-10 — Unrecorded Decision</h1>
+<p class="lede">The execution may even be admissible — but no durable record of that decision will exist.</p>
+<p><span class="badge b-warn">WARN</span> <span class="muted small">no admissibility record produced or stored</span><br></p>
+
+<h2>Definition</h2>
+<p>No durable, inspectable record of the admissibility decision is produced or stored. The mutation happens; the decision evaporates. Whatever gate logic ran leaves nothing that can be inspected, compared across time, or cited in review.</p>
+<p>This class closes the ontology because it attacks the system itself: a boundary whose decisions leave no records cannot be shown to exist. Six months later, an unrecorded allow and no decision at all are indistinguishable.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Approvals living in chat scrollback and meeting memory.</li>
+<li>Gate logic embedded in scripts that emit only an exit code.</li>
+<li>Agent deliberation discarded with the context window at the end of the session.</li>
+<li>Audit trails reconstructed after incidents instead of read during them.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>An agent framework checks permissions internally before each tool call, then throws the check away. After an incident, the operator can prove what the agent did — never what was decided about it.</p>
+<h3>CI / pipeline</h3>
+<p>A deployment gate evaluates six conditions and returns a boolean. Which condition nearly failed last Tuesday is unknowable.</p>
+<h3>Human operator</h3>
+<p>A production change is approved verbally on a bridge call during an outage. Everyone remembers it differently.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Records are what make the boundary exist over time rather than per-run. They allow decisions to be compared (“why was this allowed in March and denied in May?”), audited without archaeology, and improved deliberately. Denials are the cheapest audit findings an organization will ever produce — but only if they are kept.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Emit a JExec Record for every boundary decision — including allows, which are the majority and the baseline.</li>
+<li>Store records append-only, outside the executing system’s own write path.</li>
+<li>Reference record identifiers from deploy logs and change systems; retain denials indefinitely.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>decision</code>, <code>timestamp</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-10 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/unstated-intent.html">EAF-1 Unstated Intent</a> · <a href="/ontology/stale-evidence.html">EAF-7 Stale Evidence</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/irreversibility-blindness.html">← EAF-9 Irreversibility Blindness</a><a href="/protocol.html">Protocol →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

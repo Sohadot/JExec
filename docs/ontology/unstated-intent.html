@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EAF-1 Unstated Intent — Execution Admissibility Ontology — JExec</title>
+<meta name="description" content="The execution never declares what it is trying to do, so admissibility cannot even be evaluated. EAF-1 is an admissibility failure class in the JExec Execution Admissibility Ontology.">
+<link rel="canonical" href="https://jexec.com/ontology/unstated-intent.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "EAF-1 — Unstated Intent", "termCode": "EAF-1", "description": "The execution never declares what it is trying to do, so admissibility cannot even be evaluated.", "url": "https://jexec.com/ontology/unstated-intent.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Execution Admissibility Ontology (EAO)", "url": "https://jexec.com/ontology/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/" aria-current="page">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="crumbs"><a href="/">JExec</a> / <a href="/ontology/">Execution Admissibility Ontology</a> / EAF-1</p>
+<p class="kicker">Admissibility failure class</p>
+<h1>EAF-1 — Unstated Intent</h1>
+<p class="lede">The execution never declares what it is trying to do, so admissibility cannot even be evaluated.</p>
+<p><span class="badge b-deny">DENY</span> <span class="muted small">intent absent</span><br> <span class="badge b-warn">WARN</span> <span class="muted small">intent declared but too vague to evaluate</span><br></p>
+
+<h2>Definition</h2>
+<p>An execution reaches the mutation boundary without a declared, inspectable statement of what it intends to change. This is not a judgment that the intent is bad. The intent is absent, or so vague that no admissibility question can be asked of it.</p>
+<p>Unstated Intent is the first-order failure class. Every other admissibility question is evaluated relative to intent: authority is authority to do <em>what</em>, scope is the reach of <em>what</em>, evidence supports <em>what</em>, risk is the damage <em>what</em> can cause. When intent is unstated, the evaluation has no object.</p>
+
+<h2>How it appears</h2>
+<ul>
+<li>Scripts that run because they have always run, with no statement of what they change.</li>
+<li>CI steps named after their mechanism (<code>deploy.sh</code>, <code>sync</code>, <code>cleanup</code>) instead of their intended change.</li>
+<li>Agent tool calls whose goal exists only inside a prompt context that is never recorded.</li>
+<li>Change tickets that authorize “maintenance” without saying what will be different afterward.</li>
+</ul>
+
+<h2>Across actors</h2>
+<h3>Agent</h3>
+<p>An autonomous agent issues a destructive API call as an instrumental sub-step of a vague goal such as “clean up the workspace.” The mutating step itself carries no declared intent, so the boundary sees an unexplained deletion.</p>
+<h3>CI / pipeline</h3>
+<p>A nightly job mutates a database schema. Its only self-description is the word “sync.” Nobody can say, before it runs, which tables it intends to alter.</p>
+<h3>Human operator</h3>
+<p>An operator runs an ad-hoc production command from a runbook that documents <em>how</em> to run it but not <em>what this particular run is for</em>.</p>
+
+<h2>Why it defeats admissibility</h2>
+<p>Admissibility is a relation between an intended change and its justification. When the intended change is unstated, authority cannot be matched to it, scope cannot be checked against it, and evidence cannot support it. Any verdict issued over an unstated intent is a verdict about nothing, which is why the protocol denies rather than guesses.</p>
+
+<h2>Remediation</h2>
+<ul>
+<li>Require a declared <code>intent</code> field before execution: operation, object, and target, in one sentence a reviewer could dispute.</li>
+<li>Reject mechanism-grade intents (“run script”, “maintenance”) at the boundary; they name the actor’s activity, not the state change.</li>
+<li>For agents, materialize the goal chain: the mutating step must carry the intent it serves, not merely inherit an ambient prompt.</li>
+</ul>
+
+<h2>In the JExec Record</h2>
+<p>Primarily affects: <code>intent</code>. The <a href="/protocol.html">JExec Protocol</a> maps EAF-1 to the consequences above; <a href="/check.html">JExec Check</a> detects it deterministically and links back to this page.</p>
+
+<h2>Related classes</h2>
+<p><a href="/ontology/unbounded-scope.html">EAF-5 Unbounded Scope</a> · <a href="/ontology/unclassified-risk.html">EAF-8 Unclassified Risk</a> · <a href="/ontology/unrecorded-decision.html">EAF-10 Unrecorded Decision</a></p>
+<nav class="prevnext" aria-label="Ontology order"><a href="/ontology/">← Ontology index</a><a href="/ontology/unattributed-actor.html">EAF-2 Unattributed Actor →</a></nav>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

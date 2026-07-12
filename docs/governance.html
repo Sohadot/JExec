@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governance — how JExec earns and keeps trust</title>
+<meta name="description" content="JExec is built under a strict claims policy: versioned artifacts, an append-only decision log, no inflated authority, no unsupported adoption language. Here is the policy, in public.">
+<link rel="canonical" href="https://jexec.com/governance.html">
+<link rel="stylesheet" href="/assets/jexec.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"JExec Governance","url":"https://jexec.com/governance.html","description":"The claims policy, versioning rules, and stewardship of the JExec specification.","isPartOf":{"@type":"WebSite","name":"JExec","url":"https://jexec.com/"}}</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="/">JExec</a>
+<nav class="site-nav" aria-label="Site">
+<a href="/">Thesis</a>
+<a href="/ontology/">Ontology</a>
+<a href="/standard.html">Standard</a>
+<a href="/protocol.html">Protocol</a>
+<a href="/record.html">Record</a>
+<a href="/check.html">Check</a>
+<a href="/governance.html" aria-current="page">Governance</a>
+</nav></div></header>
+<main><div class="wrap">
+<p class="kicker">Governance · v0.1</p>
+<h1>Governance</h1>
+<p class="lede">A specification about governed execution that is not itself governed would be a joke at its own expense. This page is the constraint JExec operates under — published, so it can be held against us.</p>
+
+<h2>Claims policy</h2>
+<p>Every public claim made under the JExec name must be clear, bounded, verifiable, and versioned where necessary. Concretely, JExec currently is:</p>
+<ul>
+<li>a pre-execution admissibility <strong>specification</strong> (draft v0.1),</li>
+<li>a decision model, ontology, standard, protocol, and record format,</li>
+<li>a deterministic reference engine (<a href="/check.html">JExec Check</a>).</li>
+</ul>
+<p>And JExec currently is <strong>not</strong>:</p>
+<ul>
+<li>a certification authority — there is no “JAS certificate,” and no product may claim one,</li>
+<li>an enforcement engine, security scanner, or observability tool,</li>
+<li>a replacement for SLSA, Sigstore, or OPA — it defines the decision those systems can inform,</li>
+<li>an adopted industry standard — no adoption is claimed until it verifiably exists.</li>
+</ul>
+<p>Statements about record-format alignment with in-toto-style attestations or CloudEvents-style envelopes are design directions, not compatibility claims. This restraint is not modesty; it is the product. In a category about trustworthy decisions, inflated claims are self-disqualifying.</p>
+
+<h2>Versioning</h2>
+<ul>
+<li>The <a href="/ontology/">Ontology</a>, <a href="/standard.html">Standard</a>, <a href="/protocol.html">Protocol</a>, and <a href="/record.html">Record</a> format are versioned artifacts, currently all at draft v0.1.</li>
+<li>Definitions are <strong>appended or revised with version increments — never silently rewritten</strong>. A class code (EAF-1…EAF-10) permanently denotes what it denoted.</li>
+<li>Records carry <code>jexec_version</code>, so verdicts computed under any version remain interpretable forever.</li>
+<li>Material decisions about the specification are kept in an append-only decision log in the <a href="https://github.com/Sohadot/JExec" rel="noopener">public repository</a>.</li>
+</ul>
+
+<h2>Consistency rule</h2>
+<p>The verdict rules exist in exactly two public places: the <a href="/protocol.html">Protocol table</a> and the <a href="/check.html">Check engine</a>. They are required to agree. A divergence between them is treated as a governance incident, logged, and fixed — not quietly patched.</p>
+
+<h2>Content policy</h2>
+<ul>
+<li><strong>No mass-generated pages.</strong> Every page on this site is a maintained reference artifact with a canonical URL. The sitemap contains nothing else.</li>
+<li><strong>No dead surface.</strong> Internal links resolve; retired content redirects or is explicitly marked superseded — it does not 404.</li>
+<li><strong>Human- and agent-readable.</strong> The ontology and standard are published as stable JSON (<a href="/api/eao.json"><code>eao.json</code></a>, <a href="/api/standard.json"><code>standard.json</code></a>, <a href="/api/record.schema.json"><code>record.schema.json</code></a>) with the same versioning discipline as the prose. <a href="/llms.txt"><code>llms.txt</code></a> orients AI agents.</li>
+<li><strong>Citation.</strong> Cite definitions with their class code, version, and canonical URL — e.g. “EAF-7 Stale Evidence, EAO v0.1, jexec.com/ontology/stale-evidence.html”.</li>
+</ul>
+
+<h2>Independence and revenue</h2>
+<p>JExec sustains itself through work that extends the reference rather than diluting it — see <a href="/review.html">Execution Admissibility Review</a>. Two lines are fixed: no payment changes a definition, a level, or a verdict rule; and no sponsored content appears inside the reference layer. If sponsorship is ever accepted anywhere on this site, it will be labeled as such and confined outside the specification pages.</p>
+
+<h2>Stewardship</h2>
+<p>JExec — the name, the specification, and this site — is maintained as a single governed asset. Serious inquiries about the specification, licensing of the ontology or standard, or stewardship of the asset itself: <a href="mailto:siham.domains@gmail.com">siham.domains@gmail.com</a>.</p>
+<p class="muted small">Specification text and definitions © JExec. Reproduction with attribution and a link to the canonical URL is welcome; republishing modified definitions under the JExec name is not.</p>
+</div></main>
+<footer class="site-foot"><div class="wrap">
+<span>JExec · Pre-Execution Admissibility · spec draft v0.1</span>
+<a href="/governance.html">Claims policy</a>
+<a href="/api/eao.json">eao.json</a>
+<a href="/llms.txt">llms.txt</a>
+</div></footer>
+</body>
+</html>

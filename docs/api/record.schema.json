@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jexec.com/api/record.schema.json",
+  "title": "JExec Record",
+  "description": "The structured artifact of a pre-execution admissibility decision. Spec draft v0.1 — see https://jexec.com/record.html",
+  "type": "object",
+  "required": ["jexec_version", "intent", "actor", "authority", "scope", "risk", "evidence", "findings", "decision", "timestamp"],
+  "properties": {
+    "jexec_version": { "type": "string", "examples": ["0.1"] },
+    "intent": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The specific intended change: operation, object, target."
+    },
+    "actor": {
+      "type": "object",
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "type": "string", "enum": ["human", "ai_agent", "ci_job", "service", "script", "workflow", "other"] },
+        "id": { "type": "string", "minLength": 1 },
+        "authenticated": { "type": "boolean" },
+        "initiated_by": { "type": "string", "description": "For agents: the human or system that initiated the task." }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "required": ["source", "verified"],
+      "properties": {
+        "source": { "type": "string", "description": "e.g. rbac_policy, manual_approval, change_request, signed_release, repository_permission, none" },
+        "reference": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "verifier": { "type": "string" },
+        "covers_scope": { "type": ["boolean", "null"], "description": "Whether the authority's coverage contains the declared scope. null = unknown." }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["environment", "bounded"],
+      "properties": {
+        "environment": { "type": "string", "examples": ["production", "staging", "development"] },
+        "system": { "type": "string" },
+        "objects": { "type": "string", "description": "Object set or expected object count." },
+        "bounded": { "type": ["boolean", "string"], "enum": [true, false, "partial"] }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "required": ["class"],
+      "properties": {
+        "class": { "type": "string", "examples": ["read_only", "state_mutation", "deletion", "migration", "customer_facing", "financial", "unclassified"] },
+        "irreversible": { "type": ["boolean", "null"], "description": "null = unclassified; treated as irreversible by evidence rules." },
+        "reversal_path": { "type": ["string", "null"] }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string", "examples": ["tests_passed", "approval_present", "artifact_signed", "policy_match", "risk_assessment"] },
+          "reference": { "type": "string" },
+          "bound_to": { "type": "string", "description": "Content the evidence is bound to: artifact hash, commit range, environment version." },
+          "current": { "type": "boolean", "description": "Whether the evidence still describes this execution." }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "description": "Admissibility failure classes detected, per the Execution Admissibility Ontology (https://jexec.com/api/eao.json).",
+      "items": {
+        "type": "object",
+        "required": ["class", "consequence"],
+        "properties": {
+          "class": { "type": "string", "pattern": "^EAF-(10|[1-9])$" },
+          "name": { "type": "string" },
+          "consequence": { "type": "string", "enum": ["warn", "escalate", "deny"] },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "decision": { "type": "string", "enum": ["allow", "warn", "escalate", "deny"] },
+    "missing_evidence": { "type": "array", "items": { "type": "string" } },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}
