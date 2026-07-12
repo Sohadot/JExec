@@ -59,6 +59,7 @@
 <li><strong>No dead surface.</strong> Internal links resolve; retired content redirects or is explicitly marked superseded — it does not 404.</li>
 <li><strong>Human- and agent-readable.</strong> The ontology and standard are published as stable JSON (<a href="/api/eao.json"><code>eao.json</code></a>, <a href="/api/standard.json"><code>standard.json</code></a>, <a href="/api/record.schema.json"><code>record.schema.json</code></a>) with the same versioning discipline as the prose. <a href="/llms.txt"><code>llms.txt</code></a> orients AI agents.</li>
 <li><strong>Citation.</strong> Cite definitions with their class code, version, and canonical URL — e.g. “EAF-7 Stale Evidence, EAO v0.1, jexec.com/ontology/stale-evidence.html”.</li>
+<li><strong>Public API boundary.</strong> Public API files (<code>/api/*</code>, <code>llms.txt</code>) may contain only stable reference material: definitions, schemas, standards, and ontology data. They must never contain private reviews or their findings, customer data, credentials, negotiations, or internal strategy. The machine-readable layer is a mirror of the public specification — nothing else ever enters it.</li>
 </ul>
 
 <h2>Independence and revenue</h2>

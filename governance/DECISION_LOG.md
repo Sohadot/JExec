@@ -77,3 +77,16 @@ record.html example and field table show it. Also replaced the interim
 personal contact address with agent@sohadot.com on review.html,
 governance.html, and 404.html. Logged per the consistency rule (D-006):
 found, fixed, and recorded — not quietly patched.
+
+## 2026-07-12 · D-010 · Public API boundary
+
+Adopted, and published on /governance.html, the data boundary for the
+machine-readable layer: public API files (/api/*, llms.txt) may contain only
+stable reference material — definitions, schemas, standards, and ontology
+data. They must never contain private reviews or their findings, customer
+data, credentials, negotiations, or internal strategy. Corollaries: Review
+deliverables are delivered privately and never enter this repository; revenue
+evidence recorded in this log states facts (date, type of engagement) without
+client-identifying details unless the client consents in writing. Adopted the
+day the site went live on https://jexec.com and the sitemap (18 URLs) was
+submitted to Search Console — confirming D-007's canonical host assumption.
