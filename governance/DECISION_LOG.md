@@ -90,3 +90,14 @@ evidence recorded in this log states facts (date, type of engagement) without
 client-identifying details unless the client consents in writing. Adopted the
 day the site went live on https://jexec.com and the sitemap (18 URLs) was
 submitted to Search Console — confirming D-007's canonical host assumption.
+
+## 2026-07-12 · D-011 · Commercial numbers boundary
+
+Extended the data boundary from the API layer to the entire public repository
+and site: no number of commercial significance is ever committed — prices,
+fees, revenue figures, valuations, offers, negotiation positions, client
+counts, or client identities. Revenue evidence in this log records facts of
+occurrence (date, type of engagement) and never amounts. Amounts and terms
+live exclusively in private, off-repository storage. Rationale: the reference
+layer gains authority by being fully public; the commercial position gains
+strength by never being public. Codified in governance/DATA_BOUNDARY.md.

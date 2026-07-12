@@ -188,8 +188,9 @@ category story a corp-dev memo can lift verbatim from this file.
 - **Phase 2 — Proof:** deploy to the domain root; submit sitemap to Search
   Console; publish 2–3 deep briefs ("Agent tool calls are executions",
   "The A0→A1 jump", "Stale evidence: the diligence-shaped failure") as
-  versioned reference articles; first paid Review at founder pricing to create
-  the revenue record.
+  versioned reference articles; first paid Review to create the revenue
+  record — logged as a fact of occurrence per the data boundary, never as an
+  amount.
 - **Phase 3 — Instrument:** `jexec` CLI + GitHub Action (free) validating
   records; usage becomes the adoption signal buyers price.
 - **Phase 4 — Compound:** EAO v0.2 additions via decision log; incident
@@ -203,3 +204,6 @@ category story a corp-dev memo can lift verbatim from this file.
 3. Engine and protocol table move in lockstep or not at all.
 4. No page enters the sitemap unless it is a maintained reference artifact.
 5. Revenue must extend the reference; anything that dilutes it is declined.
+6. No number of commercial significance enters this repository or the site —
+   prices, fees, revenue, valuations, offers, negotiation positions, client
+   identities. Amounts live off-repository only (governance/DATA_BOUNDARY.md).
