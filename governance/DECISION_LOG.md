@@ -64,3 +64,16 @@ definition, level, or verdict rule; no sponsored content inside the reference
 layer; sponsorship, if ever accepted, is labeled and confined outside the
 specification pages. Declined categories recorded: display ads, sponsored
 definitions, certification fees, mass content.
+
+## 2026-07-12 · D-009 · Pre-publication consistency fix (engine ↔ record ↔ schema)
+
+Pre-launch review found that `missing_evidence` existed in the record schema
+and the README example but was neither required by the schema nor emitted by
+JExec Check — an engine/record inconsistency of the kind VERSIONING.md rule 5
+exists to catch. Resolved in both directions before first publication:
+`missing_evidence` is now a required record field (empty array when nothing is
+missing), the engine emits it (populated from EAF-6 findings), and the
+record.html example and field table show it. Also replaced the interim
+personal contact address with agent@sohadot.com on review.html,
+governance.html, and 404.html. Logged per the consistency rule (D-006):
+found, fixed, and recorded — not quietly patched.

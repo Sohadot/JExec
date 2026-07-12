@@ -55,6 +55,7 @@
     { "type": "artifact_signed", "reference": "sigstore-entry-114…" }
   ],
   "findings": [],
+  "missing_evidence": [],
   "decision": "allow",
   "timestamp": "2026-07-12T10:41:00Z"
 }</code></pre>
@@ -71,6 +72,7 @@
 <tr><td><code>evidence</code></td><td>yes</td><td>Items with type, reference, and what content (hash, version, diff range) they are bound to.</td><td><a href="/ontology/missing-evidence.html">EAF-6</a>, <a href="/ontology/stale-evidence.html">EAF-7</a></td></tr>
 <tr><td><code>risk</code></td><td>yes</td><td>Class, irreversibility flag, and the declared reversal or review path.</td><td><a href="/ontology/unclassified-risk.html">EAF-8</a>, <a href="/ontology/irreversibility-blindness.html">EAF-9</a></td></tr>
 <tr><td><code>findings</code></td><td>yes</td><td>The EAF classes detected, each with its consequence. Empty array means clean.</td><td>—</td></tr>
+<tr><td><code>missing_evidence</code></td><td>yes</td><td>What the decision lacked: the <a href="/ontology/missing-evidence.html">EAF-6</a> findings as a list. Empty array means nothing was missing.</td><td>—</td></tr>
 <tr><td><code>decision</code></td><td>yes</td><td><code>allow</code> · <code>warn</code> · <code>escalate</code> · <code>deny</code>, computed by the <a href="/protocol.html">protocol rules</a>.</td><td rowspan="2"><a href="/ontology/unrecorded-decision.html">EAF-10</a> if not stored</td></tr>
 <tr><td><code>timestamp</code></td><td>yes</td><td>When the decision was made — which is before the mutation, by definition.</td></tr>
 </tbody>

@@ -4,7 +4,7 @@
   "title": "JExec Record",
   "description": "The structured artifact of a pre-execution admissibility decision. Spec draft v0.1 — see https://jexec.com/record.html",
   "type": "object",
-  "required": ["jexec_version", "intent", "actor", "authority", "scope", "risk", "evidence", "findings", "decision", "timestamp"],
+  "required": ["jexec_version", "intent", "actor", "authority", "scope", "risk", "evidence", "findings", "missing_evidence", "decision", "timestamp"],
   "properties": {
     "jexec_version": { "type": "string", "examples": ["0.1"] },
     "intent": {

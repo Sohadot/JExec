@@ -94,6 +94,9 @@
       findings: r.findings.map(function (x) {
         return { class: x.class, name: x.name, consequence: x.consequence, url: x.url };
       }),
+      missing_evidence: r.findings
+        .filter(function (x) { return x.class === "EAF-6"; })
+        .map(function (x) { return x.name; }),
       decision: r.verdict,
       timestamp: new Date().toISOString()
     };
